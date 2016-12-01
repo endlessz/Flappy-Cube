@@ -5,7 +5,8 @@ public class Obstacle : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		destroyWhenOutOfScreen ();
+		destroyWhenOutOfScreen();
+		destroyWhenGameover();
 	}
 
 	private void destroyWhenOutOfScreen(){
@@ -14,6 +15,12 @@ public class Obstacle : MonoBehaviour {
 		//When obstacle out of screen
 		if (screenPosition.x < -1){
 			Destroy(gameObject);
+		}
+	}
+
+	private void destroyWhenGameover(){
+		if (GameManager.instance.currentState == GameStates.GAMEOVER) {
+			Destroy (gameObject, 1.5f);
 		}
 	}
 }
