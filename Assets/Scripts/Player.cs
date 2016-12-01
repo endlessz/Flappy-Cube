@@ -8,6 +8,11 @@ public class Player : MonoBehaviour {
 	public float jumpHeight;
 	public float forwardSpeed;
 
+	[Header("Sound Effect")]
+	public AudioClip deadSound; //Dead sound
+	public AudioClip moveSound; //Jump sound
+	public AudioClip scoreSound; //Score sound
+
 	private Rigidbody2D mainRigidbody2D;
 
 	void Start()
@@ -36,11 +41,13 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void Jump(){
+		SoundManager.instance.PlaySingleSoundEffect(moveSound);
 		mainRigidbody2D.velocity = new Vector2(forwardSpeed,jumpHeight);
 	}
 
 	private void Dead(){
 		mainRigidbody2D.freezeRotation = false;
+		SoundManager.instance.PlaySoundEffect(deadSound);
 		GameManager.instance.gameOver ();
 	}
 
@@ -53,8 +60,10 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Score" && GameManager.instance.currentState == GameStates.INGAME) {
-			ObstacleSpawner.instance.spawnObstacle();
+			SoundManager.instance.PlaySoundEffect(scoreSound);
 			GameManager.instance.addScore();
+			ObstacleSpawner.instance.spawnObstacle();
+
 			Destroy(other.gameObject);
 		}
 	}
