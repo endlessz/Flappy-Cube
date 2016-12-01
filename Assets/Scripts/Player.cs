@@ -41,19 +41,20 @@ public class Player : MonoBehaviour {
 
 	private void Dead(){
 		mainRigidbody2D.freezeRotation = false;
-		Debug.Log("Game Over");
+		GameManager.instance.gameOver ();
 	}
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		if (other.transform.tag == "Obstacle") {
+		if (other.transform.tag == "Obstacle" && GameManager.instance.currentState == GameStates.INGAME) {
 			Dead ();
 		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
-		if (other.tag == "Score") {
+		if (other.tag == "Score" && GameManager.instance.currentState == GameStates.INGAME) {
 			ObstacleSpawner.instance.spawnObstacle();
+			GameManager.instance.addScore();
 			Destroy(other.gameObject);
 		}
 	}
