@@ -23,7 +23,7 @@ public class Game_ButtonFunctions : MonoBehaviour {
 
 	public void OnClick(string buttonName){
 
-		SoundManager.instance.PlaySingleSoundEffect(clickSound);
+		SoundManager.instance.playSingleSoundEffect(clickSound);
 
 		switch (buttonName) {
 			case "Restart" :
@@ -45,11 +45,11 @@ public class Game_ButtonFunctions : MonoBehaviour {
 				break;
 				
 			case "MuteMusic" :
-				SoundManager.instance.MuteMusic(); 
+				SoundManager.instance.muteMusic(); 
 				break;
 				
 			case "MuteSoundEffect" :
-				SoundManager.instance.MuteSoundEffect ();
+				SoundManager.instance.muteSoundEffect();
 				break;
 		}
 	}

@@ -45,13 +45,13 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 	
-	public void PlaySingleSoundEffect(AudioClip clip)
+	public void playSingleSoundEffect(AudioClip clip)
 	{
 		efxSource.clip = clip;
 		efxSource.Play ();
 	}
 
-	public void PlaySoundEffect(AudioClip clip)
+	public void playSoundEffect(AudioClip clip)
 	{
 		if (!efxSource.mute) {
 			GameObject temporarySfxObject = new GameObject ("TempAudio");
@@ -64,7 +64,7 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
-	public void MuteMusic(){
+	public void muteMusic(){
 		if (PlayerPrefs.GetString ("music") == SoundConstants.OFF) {
 			PlayerPrefs.SetString("music", SoundConstants.ON);
 		} else {
@@ -72,12 +72,11 @@ public class SoundManager : MonoBehaviour {
 		}
 	}
 
-	public void MuteSoundEffect(){
+	public void muteSoundEffect(){
 		if (PlayerPrefs.GetString ("soundEffect") == SoundConstants.OFF) {
 			PlayerPrefs.SetString("soundEffect", SoundConstants.ON);
 		} else {
 			PlayerPrefs.SetString("soundEffect",SoundConstants.OFF);
 		}
 	}
-
 }
