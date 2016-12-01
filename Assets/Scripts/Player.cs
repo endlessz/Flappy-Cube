@@ -14,15 +14,25 @@ public class Player : MonoBehaviour {
 	public AudioClip scoreSound; //Score sound
 
 	private Rigidbody2D mainRigidbody2D;
+	private int fingerId = -1; //For every non-mobile Platform
 
 	void Start()
 	{
 		mainRigidbody2D = GetComponent<Rigidbody2D> ();
 		mainRigidbody2D.isKinematic = true; //Player not fall when in PREGAME states
+
+		if (Application.isMobilePlatform) {
+			fingerId = 0; //for mobile and unity
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		//For Block click through UI 
+		if(EventSystem.current.IsPointerOverGameObject(fingerId)){
+			return; //Not Change Direction
+		}
+			
 		//If Player go out off screen
 		if ((transform.position.y > getMaxWidth() || transform.position.y < -getMaxWidth() ) && GameManager.instance.currentState == GameStates.INGAME) {
 			Dead();
@@ -41,13 +51,13 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void Jump(){
-		SoundManager.instance.PlaySingleSoundEffect(moveSound);
+		SoundManager.instance.playSingleSoundEffect(moveSound);
 		mainRigidbody2D.velocity = new Vector2(forwardSpeed,jumpHeight);
 	}
 
 	private void Dead(){
 		mainRigidbody2D.freezeRotation = false;
-		SoundManager.instance.PlaySoundEffect(deadSound);
+		SoundManager.instance.playSoundEffect(deadSound);
 		GameManager.instance.gameOver ();
 	}
 
@@ -60,7 +70,7 @@ public class Player : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "Score" && GameManager.instance.currentState == GameStates.INGAME) {
-			SoundManager.instance.PlaySoundEffect(scoreSound);
+			SoundManager.instance.playSoundEffect(scoreSound);
 			GameManager.instance.addScore();
 			ObstacleSpawner.instance.spawnObstacle();
 
