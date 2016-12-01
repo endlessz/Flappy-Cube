@@ -26,4 +26,23 @@ public class Player : MonoBehaviour {
 	void Jump(){
 		mainRigidbody2D.velocity = new Vector2(forwardSpeed,jumpHeight);
 	}
+
+	void Dead(){
+		mainRigidbody2D.freezeRotation = false;
+		Debug.Log("Game Over");
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.transform.tag == "Obstacle") {
+			Dead ();
+		}
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Score") {
+			ObstacleSpawner.instance.spawnObstacle();
+			Destroy(other.gameObject);
+		}
+	}
 }
