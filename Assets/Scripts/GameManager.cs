@@ -72,4 +72,14 @@ public class GameManager : MonoBehaviour {
 			newBestScoreText.gameObject.SetActive(true);
 		}
 	}
+
+	public void Pause(){
+		Time.timeScale = 0; //Change timeScale to 0
+		pauseCanvas.gameObject.SetActive (true); //Show pauseCanvas
+	}
+
+	public void Resume(){
+		Time.timeScale = 1; //Change timeScale to 1
+		pauseCanvas.gameObject.SetActive (false); //Hide pauseCanvas
+	}
 }
